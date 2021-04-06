@@ -1,0 +1,36 @@
+td {
+	padding: 0;
+	font-size: small;
+}
+
+th {
+	padding: 10px;
+	font-size: small;
+}
+
+#form-fill {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 200px;
+}
+
+#form-fill2 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 70px;
+}
+
+#action-btn {
+	font-size: small;
+	padding: 1px;
+}
+
+#container{
+    overflow: hidden;
+}

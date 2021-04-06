@@ -1,0 +1,28 @@
+#course {
+	width: 20rem;
+	height: 20rem;
+}
+
+#form-box {
+	width: 20rem;
+	height: 20rem;
+	overflow: hidden;
+}
+
+#addOption {
+	display: block;
+}
+
+#course-desc {
+	resize: none;
+}
+
+#addForm {
+	display: none;
+}
+
+#optbtn {
+	position: absolute;
+	bottom: 5%;
+	right: 0%;
+}

@@ -1,0 +1,12 @@
+#loginform {
+	width: 25rem;
+	height: 25em;
+	margin: auto;
+	margin-top: 5rem;
+}
+
+#optbtn {
+	position: absolute;
+	bottom: 5%;
+	right: 0%;
+}
