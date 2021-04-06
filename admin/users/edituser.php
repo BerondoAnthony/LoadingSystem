@@ -35,12 +35,12 @@
         if($check==0 && $usertype =='Director'){
             $query3 = "UPDATE users SET username='$username', password='$password', user_type='$usertype', user_status='$status' where user_id='$curID'";
             $results = mysqli_query($dbc,$query3);
-            header("Location:./userpage.php");
+            header("Location:./userpage.php?successedit");
         }
         if($check==0 && $usertype =='Instructor'){
             $query3 = "UPDATE users SET username='$username', password='$password', user_type='$usertype', user_status='$status' where user_id='$curID'";
             $results = mysqli_query($dbc,$query3);
-            header("Location:./addinstructor.php?username=$username");
+            header("Location:./addinstructor.php?username=$username?successedit");
         }
 
         if($usertype=='Admin'){

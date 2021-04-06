@@ -12,5 +12,10 @@
         }
     }
     $results3 = mysqli_query($dbc, "INSERT INTO instructor_info(ins_name,ins_address,ins_age,ins_major,ins_email,ins_no,user_id) VALUES('', '', '', '', '', '', '$currentID')");
-    header("Location:./userpage.php");
+    if(strpos($fullurl,'successedit')){
+        header("Location:./userpage.php?successedit");
+    }
+    else{
+        header("Location:./userpage.php?successadd");
+    }
 ?>

@@ -29,7 +29,7 @@
         }
         if($check==0){
             $result = mysqli_query($dbc, "INSERT INTO curriculum(curriculum_name, course_id) VALUES('$curriculumName','$holder')"); 
-            header("Location:../courses/course.list.php?course_id=$holder");
+            header("Location:../courses/course.list.php?course_id=$holder?successadd");
         }
     };
 

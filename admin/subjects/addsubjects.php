@@ -56,20 +56,20 @@
             $results3 = mysqli_query($dbc, "INSERT INTO subjects(subject_code, subject_name, subject_units, year_level, hpw_lec, hpw_lab, semester, pre_req, curriculum_id) VALUES('$code','$title', '$units', '$year', '$lec', '$lab', '$semester', '$req', '$currentID')");
            
             if(strpos($fullurl,'year1')){
-                header("Location:../curriculum/firstyear.php?curriculum_id=$currentID?year1");
+                header("Location:../curriculum/firstyear.php?curriculum_id=$currentID?year1?successadd");
             }
 
             if(strpos($fullurl,'year2')){
-                header("Location:../curriculum/secondyear.php?curriculum_id=$currentID?year2");
+                header("Location:../curriculum/secondyear.php?curriculum_id=$currentID?year2?successadd");
             }
 
             if(strpos($fullurl,'year3')){
-                header("Location:../curriculum/thirdyear.php?curriculum_id=$currentID?year3");
+                header("Location:../curriculum/thirdyear.php?curriculum_id=$currentID?year3?successadd");
 
             }
 
             if(strpos($fullurl,'year4')){
-                header("Location:../curriculum/fourthyear.php?curriculum_id=$currentID?year4");
+                header("Location:../curriculum/fourthyear.php?curriculum_id=$currentID?year4?successadd");
 
             }
         }

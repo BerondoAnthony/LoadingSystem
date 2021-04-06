@@ -18,7 +18,7 @@
         }
         if($check==0){
             $result = mysqli_query($dbc, "INSERT INTO course(course_name, description) VALUES('$coursename','$coursedesc')"); 
-            header("Location:./courses.php");
+            header("Location:./courses.php?successadd");
         }
     };
 

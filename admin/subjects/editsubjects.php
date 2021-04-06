@@ -58,20 +58,20 @@
             $result = mysqli_query($dbc, "UPDATE subjects SET subject_code='$code', subject_name='$title', subject_units='$units', hpw_lec='$lec', hpw_lab='$lab', pre_req='$req' WHERE subject_id = '$subjectID'");
             
             if(strpos($fullurl,'year1')){
-                header("Location:../curriculum/firstyear.php?curriculum_id=$currentID?year1");
+                header("Location:../curriculum/firstyear.php?curriculum_id=$currentID?year1?successedit");
             }
 
             if(strpos($fullurl,'year2')){
-                header("Location:../curriculum/secondyear.php?curriculum_id=$currentID?year2");
+                header("Location:../curriculum/secondyear.php?curriculum_id=$currentID?year2?successedit");
             }
 
             if(strpos($fullurl,'year3')){
-                header("Location:../curriculum/thirdyear.php?curriculum_id=$currentID?year3");
+                header("Location:../curriculum/thirdyear.php?curriculum_id=$currentID?year3?successedit");
 
             }
 
             if(strpos($fullurl,'year4')){
-                header("Location:../curriculum/fourthyear.php?curriculum_id=$currentID?year4");
+                header("Location:../curriculum/fourthyear.php?curriculum_id=$currentID?year4?successedit");
 
             }
             

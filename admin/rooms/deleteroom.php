@@ -14,7 +14,7 @@
     }
 
     $results3 = mysqli_query($dbc, "DELETE FROM rooms where room_id = $curID");
-    header("Location:./rooms.php");
+    header("Location:./rooms.php?successdelete");
       
 
 ?>

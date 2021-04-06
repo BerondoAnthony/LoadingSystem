@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./inspage.css">
-
+    <link rel="icon" href="../../assets/images/favicon.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
     </head>
@@ -19,7 +19,40 @@
       include_once("../../reusables/margin.php");
       $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
       
-    ?>  
+    ?> 
+    
+    <?php
+        if(strpos($fullurl,'successedit') == true){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successedit').modal('show');
+            });
+        </script>
+
+    <?php
+        }
+    ?>
+    <!-- success modal -->
+    <div class="modal fade" id="successedit" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Change successful.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>   
+
 
     <div class="pl-2 pt-2" id="container">
 
@@ -65,7 +98,7 @@
                     </div>
                     <div>
                         <label class="" id="labels">Email:</label>
-                        <input type="text" class="" value="<?php echo $res2['ins_email']?>" name="mailform" id="form-fill">
+                        <input type="text" class="" value="<?php echo $res2['ins_email']?>" name="emailform" id="form-fill">
                     </div>
                     <div>
                         <label class="" id="labels">Number:</label>

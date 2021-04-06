@@ -51,7 +51,101 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div> 
+    
+    <?php
+        if(strpos($fullurl,'successedit') == true){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successedit').modal('show');
+            });
+        </script>
+
+    <?php
+        }
+    ?>
+    <?php
+        if(strpos($fullurl,'successadd') == true){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successadd').modal('show');
+            });
+        </script>
+
+    <?php
+        }
+    ?>
+    <?php
+        if(strpos($fullurl,'successdelete') == true){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successdelete').modal('show');
+            });
+        </script>
+
+    <?php
+        }
+    ?>
+    <!-- success modal -->
+    <div class="modal fade" id="successedit" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Change successful.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- success modal -->
+    <div class="modal fade" id="successadd" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Room was added successful.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- success modal -->
+    <div class="modal fade" id="successdelete" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Delete successful.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </div> 
 
     <div  class="pt-2 pl-1 pr-1 pb-5" id="container">
         
