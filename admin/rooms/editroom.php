@@ -36,7 +36,7 @@
         if($check==0){
             $query3 = "UPDATE rooms SET room_name='$roomname', room_building='$roomloc' where room_id='$curID'";
             $results = mysqli_query($dbc,$query3);
-            header("Location:./rooms.php?");
+            header("Location:./rooms.php?successedit");
             echo $curID;
         }
 

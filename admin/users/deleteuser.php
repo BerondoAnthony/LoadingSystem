@@ -17,10 +17,10 @@
         $results4 = mysqli_query($dbc, "DELETE FROM instructor_info where user_id = $curID");
         $results3 = mysqli_query($dbc, "DELETE FROM users where user_id = $curID");
         if(strpos($fullurl,'insList') == true){
-            header("Location:../instructors/instructorlist.php");
+            header("Location:../instructors/instructorlist.php?successdelete");
         }
         else{
-            header("Location:./userpage.php");
+            header("Location:./userpage.php?successdelete");
         }
     }
     else{

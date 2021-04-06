@@ -20,7 +20,7 @@
         }
         if($check==0){
             $results3 = mysqli_query($dbc, "INSERT INTO rooms(room_name, room_building) VALUES('$roomname', '$roomloc')");
-            header("Location:./rooms.php");
+            header("Location:./rooms.php?successadd");
             
         }
 

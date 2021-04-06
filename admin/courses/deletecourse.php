@@ -24,7 +24,7 @@
     $results3 = mysqli_query($dbc, "DELETE FROM subjects WHERE curriculum_id = $curID");
     $results4 = mysqli_query($dbc, "DELETE FROM curriculum WHERE course_id = $courseID");
     $results5 = mysqli_query($dbc, "DELETE FROM course WHERE course_id = $courseID");
-    header("Location:./courses.php?");
+    header("Location:./courses.php?successdelete");
       
 
 ?>

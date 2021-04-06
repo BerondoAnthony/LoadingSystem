@@ -29,7 +29,7 @@
 
         if($check==0){
             $result = mysqli_query($dbc, "UPDATE course SET course_name='$coursename', description='$coursedesc' where course_id='$holder'");
-            header("Location:./course.list.php?course_id=$holder");
+            header("Location:./course.list.php?course_id=$holder?successedit");
         }
     };
 
