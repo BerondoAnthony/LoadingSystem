@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
+    if($_SESSION['user_type']=="Admin" || $_SESSION['user_type']=="Secretary"){
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -19,9 +26,37 @@
         include_once("../../reusables/margin.php");
     ?>    
 
-    <?php
+<?php
         $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if(strpos($fullurl,'error') == true){
+        if(($_SESSION['modal'] == 'errordelete')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaldelete').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'erroredit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaledit').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'error')){
     ?>
         <script>
             $(document).ready(function() {
@@ -30,6 +65,47 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'successedit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successedit').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+    <?php
+        if(($_SESSION['modal'] == 'successadd')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successadd').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+    <?php
+        if(($_SESSION['modal'] == 'successdelete')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#successdelete').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
 
@@ -52,43 +128,7 @@
             </div>
         </div>
     </div> 
-    
-    <?php
-        if(strpos($fullurl,'successedit') == true){
-    ?>
-        <script>
-            $(document).ready(function() {
-            $('#successedit').modal('show');
-            });
-        </script>
-
-    <?php
-        }
-    ?>
-    <?php
-        if(strpos($fullurl,'successadd') == true){
-    ?>
-        <script>
-            $(document).ready(function() {
-            $('#successadd').modal('show');
-            });
-        </script>
-
-    <?php
-        }
-    ?>
-    <?php
-        if(strpos($fullurl,'successdelete') == true){
-    ?>
-        <script>
-            $(document).ready(function() {
-            $('#successdelete').modal('show');
-            });
-        </script>
-
-    <?php
-        }
-    ?>
+   
     <!-- success modal -->
     <div class="modal fade" id="successedit" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -147,7 +187,7 @@
         </div>
     </div> 
 
-    <div  class="pt-2 pl-1 pr-1 pb-5" id="container">
+    <div  class="pl-1 pr-1" id="container">
         
         <div class="text-center p-4">
             <h2 class="mt-5">Rooms</h2>
@@ -155,11 +195,12 @@
 
         <div class="pt-2 pl-1 pr-1 pb-5 row justify-content-center">
         
-            <table class="table table-bordered w-75 " id="list">
+            <table class="table table-bordered w-75" id="list">
                             
                 <tr class="bg-dark text-white" id="label-header">
                     <th class="font-weight-bold text-center font-weight-light" id="">Room Number</th>
                     <th class="font-weight-bold text-center font-weight-light" id="">Building Name</th>
+                    <th class="font-weight-bold text-center font-weight-light" id="">Capacity</th>
                     <th class="font-weight-bold text-center font-weight-light" id="">Actions</th>
                 </tr>
                 <tr class="" id="">
@@ -169,6 +210,9 @@
                         </td>
                         <td class="font-weight-bold text-center" id="">
                             <input class="font-weight-bold text-center" placeholder="Input" type="text" value="" id="form-fill" name="roomloc" required>
+                        </td>
+                        <td class="font-weight-bold" id="">
+                            <input class="font-weight-bold text-center" placeholder="Input" type="text" value="" id="form-fill" name="roomcapacity" required>
                         </td>
                         
                         <td class="font-weight-bold text-center">
@@ -180,7 +224,7 @@
                 </tr>
 
                 <?php
-                    $query = "SELECT * FROM rooms ORDER BY room_building ASC";
+                    $query = "SELECT * FROM rooms ORDER BY room_building, room_name ASC";
                     $results = mysqli_query($dbc, $query);
                     while($res = mysqli_fetch_array($results)){
                 ?>
@@ -192,6 +236,9 @@
                         </td>
                         <td class="font-weight-bold text-center" id="">
                             <input class="font-weight-bold text-center" type="text" value="<?php echo $res['room_building']?>" id="form-fill" name="roomloc" required>
+                        </td>
+                        <td class="font-weight-bold text-center" id="">
+                            <input class="font-weight-bold text-center" type="text" value="<?php echo $res['capacity']?>" id="form-fill" name="roomcapacity" required>
                         </td>
                         <td class="font-weight-bold text-center">
                             <button type="submit" class="btn text-success btn-xs" onclick="" id="action-btn">
@@ -211,20 +258,9 @@
                 ?>
             
             </table>
-        
-        
-        
-        
         </div>
-      
     </div>
-      
-    
-    
-    
-    
-    
-    
+
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -232,3 +268,20 @@
   
   </body>
 </html>
+<?php
+    
+    }else{
+        here:
+        include_once("../../reusables/navbar.php");
+        include_once("../../connection/connection.php");
+        include_once("../../reusables/margin.php");
+        include_once("../../reusables/404.shtml");
+
+    }
+
+}
+else{
+    include_once("../../reusables/404.shtml");
+
+}
+?>

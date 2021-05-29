@@ -1,0 +1,51 @@
+td {
+	padding: 0;
+	font-size: small;
+}
+
+th {
+	padding: 10px;
+	font-size: small;
+}
+
+#form-fill {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 200px;
+}
+
+#form-fill3 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 100px;
+}
+
+#form-fill4 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 100px;
+	justify-content: center;
+}
+
+#action-btn {
+	font-size: small;
+	padding: 1px;
+}
+
+#container {
+	overflow: hidden;
+}
+
+#act {
+	padding-left: 30px;
+	padding-right: 30px;
+}

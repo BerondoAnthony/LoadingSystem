@@ -31,6 +31,24 @@ th {
 	padding: 1px;
 }
 
-#container{
-    overflow: hidden;
+#container {
+	overflow: hidden;
+}
+
+#form-fill-special {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 200px;
+}
+
+#form-fill-special2 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 200px;
 }

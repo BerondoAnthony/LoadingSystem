@@ -1,0 +1,37 @@
+#course {
+	width: 20rem;
+	height: 20rem;
+}
+
+#form-box {
+	width: 20rem;
+	height: 20rem;
+	overflow: hidden;
+}
+
+#addOption {
+	display: block;
+}
+
+#course-desc {
+	resize: none;
+}
+
+#addForm {
+	display: none;
+}
+
+#optbtn {
+	position: absolute;
+	bottom: 5%;
+	right: 0%;
+}
+
+#class-card {
+	display: flex;
+	font-size: 50px;
+}
+
+#adjust {
+	margin-top: 2.3px;
+}

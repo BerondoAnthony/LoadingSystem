@@ -1,0 +1,20 @@
+#loginform {
+	width: 25rem;
+	height: 25em;
+	margin: auto;
+	margin-top: 8rem;
+}
+
+#optbtn {
+	position: absolute;
+	bottom: 5%;
+	right: 0%;
+}
+
+#invalid-pop {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: -5px;
+	color: red;
+	font-size: medium;
+}

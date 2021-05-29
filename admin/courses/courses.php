@@ -1,3 +1,10 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
+      if($_SESSION['user_type']=="Admin" || $_SESSION['user_type']=="Secretary"){
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -20,7 +27,35 @@
     
     <?php
         $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if(strpos($fullurl,'error') == true){
+        if(($_SESSION['modal'] == 'errordelete')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaldelete').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'erroredit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaledit').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'error')){
     ?>
         <script>
             $(document).ready(function() {
@@ -29,11 +64,12 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
 
-<?php
-        if(strpos($fullurl,'successedit') == true){
+    <?php
+        if(($_SESSION['modal'] == 'successedit')){
     ?>
         <script>
             $(document).ready(function() {
@@ -42,10 +78,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successadd') == true){
+        if(($_SESSION['modal'] == 'successadd')){
     ?>
         <script>
             $(document).ready(function() {
@@ -54,10 +91,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successdelete') == true){
+        if(($_SESSION['modal'] == 'successdelete')){
     ?>
         <script>
             $(document).ready(function() {
@@ -66,6 +104,7 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <!-- success modal -->
@@ -149,7 +188,7 @@
       <h2 class="mt-5">Courses</h2>
     </div>
 
-    <div class="mr-3 ml-3 mb-3 row justify-content-center">
+    <div class="mr-3 ml-3 mb-3 row justify-content-center" id="adjust">
 
       <div class="card m-5 p-2 pt-3 shadow" id="form-box">
         <div class="m-1 pt-4 mt-2 ml-5 mr-5" id="addOption">
@@ -209,3 +248,20 @@
   </body>
 
 </html>
+<?php
+    
+    }else{
+        here:
+        include_once("../../reusables/navbar.php");
+        include_once("../../connection/connection.php");
+        include_once("../../reusables/margin.php");
+        include_once("../../reusables/404.shtml");
+
+    }
+
+}
+else{
+    include_once("../../reusables/404.shtml");
+
+}
+?>
