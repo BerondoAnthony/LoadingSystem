@@ -1,5 +1,7 @@
 <?php
+session_start();
 
+if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
     include_once("../../connection/connection.php");
 
     if(isset($_POST['courseName'])){
@@ -17,7 +19,8 @@
             }
             if($res['course_name'] == $coursename && $res['course_id'] != $holder){
                 $check=1;
-                header("Location:./courses.php?error");
+                $_SESSION['modal'] = "error";
+                header("Location:./courses.php");
                 
             }
             if($res['course_name'] == $coursename && $res['course_id'] == $holder){
@@ -29,8 +32,9 @@
 
         if($check==0){
             $result = mysqli_query($dbc, "UPDATE course SET course_name='$coursename', description='$coursedesc' where course_id='$holder'");
-            header("Location:./course.list.php?course_id=$holder?successedit");
+            $_SESSION['modal'] = "successedit";
+            header("Location:./course.list.php?course_id=$holder");
         }
     };
-
+}
 ?>

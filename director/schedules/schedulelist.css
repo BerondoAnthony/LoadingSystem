@@ -1,0 +1,179 @@
+td {
+	padding: 0;
+	font-size: x-small;
+}
+
+th {
+	padding: 10px;
+	font-size: x-small;
+}
+#code {
+	width: 70px;
+}
+
+#title {
+	width: 200px;
+}
+#units {
+	width: 30px;
+}
+#act {
+	width: 50px;
+}
+
+#action-btn {
+	font-size: small;
+	padding: 1px;
+}
+#form-fill {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 200px;
+}
+
+#form-fill2 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 70px;
+}
+
+#form-fill3 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 30px;
+}
+
+#form-fill4 {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 90px;
+}
+
+#sub-btn {
+	font-size: x-small;
+	margin: 0;
+	padding: 0;
+}
+
+#container {
+	overflow: hidden;
+	border-radius: 0%;
+}
+
+#addOption {
+	display: block;
+}
+
+#course-desc {
+	resize: none;
+}
+
+#addForm {
+	display: none;
+}
+
+#main {
+	display: block;
+	width: 96.7%;
+	height: 13rem;
+}
+
+#toEdit {
+	display: none;
+	width: 96.7%;
+	height: 13rem;
+}
+
+#toDelete {
+	display: none;
+	width: 96.7%;
+	height: 13rem;
+}
+
+#optbtn {
+	position: absolute;
+	bottom: 5%;
+	right: 0%;
+}
+
+#optbtn2 {
+	position: absolute;
+	top: 5%;
+	right: 0%;
+	display: flex;
+}
+
+#head-detail {
+	border-radius: 0%;
+}
+
+#time-form {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 100px;
+}
+
+#ins-form {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 150px;
+}
+
+#day-form {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 100px;
+}
+
+#room-form {
+	border: none;
+	outline: none;
+	font-size: x-small;
+	padding: 0%;
+	margin: 0%;
+	width: 125px;
+}
+
+#check {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#check2 {
+	text-align: center;
+	margin: auto;
+}
+
+#ins-form2 {
+	border: none;
+	outline: none;
+	font-size: small;
+	padding: 0%;
+	margin: 0%;
+	text-align: center;
+}
+
+#head-head {
+	display: flex;
+}

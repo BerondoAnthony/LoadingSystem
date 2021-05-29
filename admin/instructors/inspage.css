@@ -1,9 +1,23 @@
 #profile {
-	width: 50em;
+	width: 45em;
+	display: flex;
 }
 
 #container {
 	overflow: hidden;
+	display: flex;
+}
+
+#pref-sched {
+	width: 45em;
+}
+
+#subj-ass {
+	width: 45em;
+}
+
+#schedule {
+	width: 45em;
 }
 
 #form-fill {
@@ -12,9 +26,114 @@
 	padding: 0%;
 	margin: 0%;
 	font-size: small;
-	width: 400px;
+	width: 300px;
 }
 
 #labels {
 	font-size: small;
+}
+
+#optbtn {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+td {
+	padding: 0;
+	font-size: small;
+}
+
+th {
+	padding: 10px;
+	font-size: small;
+}
+#form-fill2 {
+	border: none;
+	outline: none;
+	font-size: small;
+	padding: 0%;
+	margin: 0%;
+	height: 10px;
+	width: 100px;
+}
+
+#action-btn {
+	font-size: small;
+	padding: 1px;
+}
+
+#container {
+	overflow: hidden;
+}
+
+#ins-form {
+	border: none;
+	outline: none;
+	font-size: small;
+	padding: 0%;
+	margin: 0%;
+	width: 300px;
+}
+
+#table-pos {
+	margin: 5px;
+	margin-bottom: -20px;
+	display: flex;
+}
+
+#list {
+	margin: 5px;
+}
+
+#table-pos2 {
+	margin: auto;
+	margin-bottom: -20px;
+	margin-top: -12px;
+}
+
+#password-flex {
+	display: flex;
+}
+
+#form-fill-special {
+	border: none;
+	outline: none;
+	padding: 0%;
+	margin: 0%;
+	font-size: small;
+	width: 300px;
+}
+
+#thebox {
+	position: absolute;
+	right: 9px;
+	bottom: 77px;
+}
+
+#labels2 {
+	font-size: small;
+	margin-left: 12.9em;
+}
+
+#ins-form2 {
+	border: none;
+	outline: none;
+	font-size: small;
+	padding: 0%;
+	margin: 0%;
+}
+
+#filter {
+	display: flex;
+	justify-content: space-between;
+}
+
+#filt {
+	width: 8em;
+	font-size: small;
+}
+
+#spec {
+	margin-top: 5px;
 }

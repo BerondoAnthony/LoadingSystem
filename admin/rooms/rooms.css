@@ -13,7 +13,7 @@ th {
 	font-size: x-small;
 	padding: 0%;
 	margin: 0%;
-	width: 500px;
+	width: 300px;
 }
 
 #action-btn {
@@ -21,6 +21,6 @@ th {
 	padding: 1px;
 }
 
-#container{
-    overflow: hidden;
+#container {
+	overflow: hidden;
 }

@@ -1,5 +1,7 @@
 <?php
+session_start();
 
+if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
     include_once("../../connection/connection.php");
 
     $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -20,8 +22,8 @@
 
     $results = mysqli_query($dbc, "DELETE FROM subjects WHERE curriculum_id = $curID");
     $results3 = mysqli_query($dbc, "DELETE FROM curriculum WHERE curriculum_id = $curID");
-
-    header("Location:../courses/course.list.php?course_id=$courseID?successdelete");
-      
+    $_SESSION['modal'] = "successdelete";
+    header("Location:../courses/course.list.php?course_id=$courseID");
+}
 
 ?>

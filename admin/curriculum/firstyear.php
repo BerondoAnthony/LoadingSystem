@@ -1,3 +1,11 @@
+<?php
+error_reporting(0);
+session_start();
+
+if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
+    if($_SESSION['user_type']=="Admin" || $_SESSION['user_type']=="Secretary"){
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -31,7 +39,14 @@
            break;
         }
       }
-
+      if(strpos($fullurl,$currentID) == false){
+        goto here;
+      }
+      
+      if(strpos($fullurl,'year1') == false){
+        goto here;
+      }
+      
       $query2 = "SELECT * FROM course";
       $results2 = mysqli_query($dbc, $query2);
       while($res2 = mysqli_fetch_array($results2)){
@@ -44,7 +59,35 @@
     
     <?php
         $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if(strpos($fullurl,'error') == true){
+        if(($_SESSION['modal'] == 'errordelete')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaldelete').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'erroredit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaledit').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'error')){
     ?>
         <script>
             $(document).ready(function() {
@@ -53,10 +96,12 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
+
     <?php
-        if(strpos($fullurl,'successedit') == true){
+        if(($_SESSION['modal'] == 'successedit')){
     ?>
         <script>
             $(document).ready(function() {
@@ -65,10 +110,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successadd') == true){
+        if(($_SESSION['modal'] == 'successadd')){
     ?>
         <script>
             $(document).ready(function() {
@@ -77,10 +123,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successdelete') == true){
+        if(($_SESSION['modal'] == 'successdelete')){
     ?>
         <script>
             $(document).ready(function() {
@@ -89,8 +136,31 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
+
+    <!-- delete modal -->
+    <div class="modal fade" id="currmodal" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this curriculum?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <a href="./deletecurriculum.php?curriculum_id=<?php echo $currentID?>" class="btn btn-danger btn-sm" id="dobtn" >Yes</a>
+                  </div>
+            </div>
+        </div>
+    </div>
+
     <!-- success modal -->
     <div class="modal fade" id="successedit" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -172,12 +242,14 @@
     <div class="card" id="head-detail">
         <h3 class="text-center font-weight-light p-3"><?php echo "$courseName $curriculumName" ?> Curriculum</h3>
         <div class="ml-3 mr-3" id="optbtn2">
+            <!--
             <a href="" class="btn text-primary btn-sm" id="action-btn">
                 <i class="fas fa-pencil-alt"></i>
             </a>
-            <a href="./deletecurriculum.php?curriculum_id=<?php echo $currentID?>" class="btn text-danger btn-sm" id="action-btn">
+            -->
+            <button type="button" class="btn text-danger btn-sm" id="action-btn" data-toggle="modal" data-target="#currmodal" >
                 <i class="fa fa-trash"></i>
-            </a>
+            </button>
         </div>
     </div>
     <h5 class="font-weight-light text-center mt-2">Year Levels</h5>
@@ -209,8 +281,8 @@
 
                     <tr>
                         <form action="../subjects/addsubjects.php?curriculum_id=<?php echo "$currentID" ?>?year1" method="POST">
-                            <input type="hidden" value="First" name="semester" required>
-                            <input type="hidden" value="First Year" name="yrlvl" required>
+                            <input type="hidden" value="1" name="semester" required>
+                            <input type="hidden" value="1" name="yrlvl" required>
 
                             <td class="font-weight-bold text-center" cellpadding="0">
                                 <input class="font-weight-bold text-center" placeholder="Input" type="text" value="" id="form-fill2" name="code" required>
@@ -239,11 +311,11 @@
                     </tr>
 
                     <?php
-                        $fsem = "First";
+                        $fsem = "1";
                         $query = "SELECT * FROM subjects";
                         $results = mysqli_query($dbc, $query);
                         while($res = mysqli_fetch_array($results)){
-                            if($res['curriculum_id'] == $currentID && $res['semester'] == $fsem && $res['year_level'] == "First Year"){   
+                            if($res['curriculum_id'] == $currentID && $res['semester'] == $fsem && $res['year_level'] == "1"){   
                     ?>
                         <tr>
                             <form action="../subjects/editsubjects.php?subject_id=<?php echo $res['subject_id']?>?year1" method="POST">
@@ -302,8 +374,8 @@
                     </tr>
                     <tr>
                         <form action="../subjects/addsubjects.php?curriculum_id=<?php echo "$currentID?" ?>year1" method="POST">
-                            <input type="hidden" value="Second" name="semester" required>
-                            <input type="hidden" value="First Year" name="yrlvl" required>
+                            <input type="hidden" value="2" name="semester" required>
+                            <input type="hidden" value="1" name="yrlvl" required>
 
                             <td class="font-weight-bold text-center">
                                 <input class="font-weight-bold text-center" placeholder="Input" type="text" id="form-fill2" name="code" required>
@@ -332,12 +404,11 @@
                     </tr>
 
                     <?php
-                        $Ssem = "Second";
+                        $Ssem = "2";
                         $query = "SELECT * FROM subjects";
                         $results = mysqli_query($dbc, $query);
                         while($res = mysqli_fetch_array($results)){
-                            if($res['curriculum_id'] == $currentID && $res['semester'] == $Ssem && $res['year_level'] == "First Year"){
-                            
+                            if($res['curriculum_id'] == $currentID && $res['semester'] == $Ssem && $res['year_level'] == "1"){
                     ?>
 
                         <tr>
@@ -372,6 +443,7 @@
                                 </td>
                             </form>
                         </tr>
+
                         <?php
                             }
                         }
@@ -384,11 +456,27 @@
 
         </div>
     </div>
-  
-      
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 
 </html>
+<?php
+    
+    }else{
+        here:
+        include_once("../../reusables/navbar.php");
+        include_once("../../connection/connection.php");
+        include_once("../../reusables/margin.php");
+        include_once("../../reusables/404.shtml");
+
+    }
+
+}
+else{
+    include_once("../../reusables/404.shtml");
+
+}
+?>

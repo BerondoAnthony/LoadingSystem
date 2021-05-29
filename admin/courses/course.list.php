@@ -1,3 +1,11 @@
+<?php
+error_reporting(0);
+session_start();
+
+if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
+  if($_SESSION['user_type']=="Admin" || $_SESSION['user_type']=="Secretary"){
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -27,11 +35,42 @@
           $courseId = $res['course_id'];
         }
       }
+      if(strpos($fullurl,$courseId) == false){
+        goto here;
+      }
     ?>
 
     <?php
         $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if(strpos($fullurl,'error') == true){
+        if(($_SESSION['modal'] == 'errordelete')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaldelete').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'erroredit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#errormodaledit').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
+
+    <?php
+        if(($_SESSION['modal'] == 'error')){
     ?>
         <script>
             $(document).ready(function() {
@@ -40,10 +79,12 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
+
     <?php
-        if(strpos($fullurl,'successedit') == true){
+        if(($_SESSION['modal'] == 'successedit')){
     ?>
         <script>
             $(document).ready(function() {
@@ -52,10 +93,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successadd') == true){
+        if(($_SESSION['modal'] == 'successadd')){
     ?>
         <script>
             $(document).ready(function() {
@@ -64,10 +106,11 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <?php
-        if(strpos($fullurl,'successdelete') == true){
+        if(($_SESSION['modal'] == 'successdelete')){
     ?>
         <script>
             $(document).ready(function() {
@@ -76,6 +119,7 @@
         </script>
 
     <?php
+        $_SESSION['modal'] = "None";
         }
     ?>
     <!-- success modal -->
@@ -97,6 +141,28 @@
             </div>
         </div>
     </div> 
+
+    <!-- delete modal -->
+    <div class="modal fade" id="confirmmodal" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <a href="deletecourse.php?course_id=<?php echo $courseId?>" class="btn btn-danger btn-sm" id="dobtn" >Yes</a>
+                  </div>
+            </div>
+        </div>
+    </div> 
+
     <!-- success modal -->
     <div class="modal fade" id="successadd" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -163,7 +229,7 @@
       </div>
       <div class="ml-3 mr-3" id="optbtn">
         <button type="button" class="btn btn-secondary btn-sm" id="dobtn" onclick="toEditOption()" >Edit</button>
-        <button type="button" class="btn btn-danger btn-sm" id="dobtn" onclick="toDeleteOption()" >Delete</button>
+        <button type="button" class="btn btn-danger btn-sm" id="dobtn" data-toggle="modal" data-target="#confirmmodal" >Delete</button>
       </div>
     </div>
 
@@ -181,19 +247,6 @@
       </form>
     </div>
 
-    <div class="card" id="toDelete">
-      <div class="mt-3 mr-3 ml-3">
-        <h2 class="mt-3 mb-3 ml-3 text-danger"><?php echo $courseName?></h2>
-        <p class="ml-3 text-danger"><?php echo $courseDesc?></p>
-        <p class="ml-3 text-danger font-weight-bold">Deleting a course will also delete all curriculums under it. Are you sure you want to delete this course?</p>
-      </div>
-
-      <div class="ml-3 mr-3" id="optbtn">
-        <button type="button" class="btn btn-primary btn-sm" onclick="toReturn()" id="dobtn">Cancel</button>
-        <a href="deletecourse.php?course_id=<?php echo $courseId?>" class="btn btn-danger btn-sm" id="dobtn" >Yes</a>
-      </div>
-    </div>
-
     <div class="mr-3 ml-3 mb-3 row justify-content-center">
 
       <div class="card m-5 p-2 pt-3 shadow" id="form-box">
@@ -205,7 +258,7 @@
 
         <div class="col text-center" id="addForm">
           <form class="" action="../curriculum/addcurriculum.php?course_id=<?php echo $courseId?>" method="POST">
-            <input class="w-100 mb-2" type="text" placeholder="Curriculum Name" name="curriculumName" required>
+            <input class="w-100 mb-2" type="text" placeholder="Curriculum Effective Year" name="curriculumName" required>
             <div class="ml-3 mr-3" id="optbtn">
               <button type="button" class="btn btn-secondary " onclick="toAddOption()">Cancel</button>
               <input class="btn btn-primary " type="submit" value="Save">
@@ -215,12 +268,13 @@
       </div>
 
       <?php
-        $query = "SELECT * FROM curriculum WHERE course_id = $courseId";
+        $query = "SELECT * FROM curriculum WHERE course_id = $courseId ORDER BY curriculum_name ASC";
         $results = mysqli_query($dbc, $query);
         while($res = mysqli_fetch_array($results)){
           $curriculumId = $res['curriculum_id']
       ?>
           <div class="card m-5 p-5 shadow" id="curriculum">
+            <h3 class="text-center font-weight-normal">Curriculum</h3>
             <h3 class="text-center font-weight-normal"><?php echo $res['curriculum_name']?></h3>
             <a href="../curriculum/firstyear.php?curriculum_id=<?php echo $curriculumId?>?year1"class="btn stretched-link shadow-none"></a>
           </div>
@@ -260,15 +314,6 @@
           theEdit.style.display = "block"
           theDelete.style.display = "none"
       }
-
-      function toDeleteOption(){
-          theMain.style.display = "none"
-          theEdit.style.display = "none"
-          theDelete.style.display = "block"
-      }
-
-
-
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -277,3 +322,20 @@
   </body>
 
 </html>
+<?php
+    
+    }else{
+        here:
+        include_once("../../reusables/navbar.php");
+        include_once("../../connection/connection.php");
+        include_once("../../reusables/margin.php");
+        include_once("../../reusables/404.shtml");
+
+    }
+
+}
+else{
+    include_once("../../reusables/404.shtml");
+
+}
+?>
