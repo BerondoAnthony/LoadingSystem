@@ -1,3 +1,8 @@
+<?php
+error_reporting(0);
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -26,6 +31,13 @@
           <div id="optbtn">
             <button type="submit" class="btn btn-primary mr-5">Login</button>
           </div>
+          <?php
+            if($_SESSION['loginerror'] != 0){
+          ?>
+            <p class="mt-2 text-danger text-center">Invalid Username or Password.</p>
+          <?php
+            }
+          ?>
         </form>
       </div>
     </div>

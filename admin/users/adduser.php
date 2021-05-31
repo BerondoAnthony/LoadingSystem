@@ -12,7 +12,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $status = $_POST['status'];
         $username = 'user';
         $password = 'pass';
-        $email = ['email'];
+        $email = $_POST['email'];
 
 
         $string1 = "qwertyuiop098ASDFGHJKL";
@@ -36,7 +36,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
             }
         }
         
-        /*
+        
         $to = $email; 
         $subject = 'ICS Faculty Loading System'; 
         $message = "These are your login credentials for ICS Faculty Loading Sysyem. We advise you to change it. Username: $username Password: $password."; 
@@ -45,12 +45,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                     'X-Mailer: PHP/' . phpversion(); 
 
         mail($to, $subject, $message, $headers);  
-        */     
              
         if($check==0){
-            $results3 = mysqli_query($dbc, "INSERT INTO users(username, password, user_type, user_status, email) VALUES('$username', '$password', '$usertype', '$status', $email)");
+            $results3 = mysqli_query($dbc, "INSERT INTO users(username, password, user_type, user_status, email) VALUES('$username', '$password', '$usertype', '$status', '$email')");
             $_SESSION['modal'] = "successadd";
             header("Location:./userpage.php?successadd");
+            
         }
     }
 }

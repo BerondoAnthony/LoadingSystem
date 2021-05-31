@@ -8,6 +8,7 @@
         $username = $_POST['usernameform'];
         $password = $_POST['passwordform'];
         $user_status = "Active";
+        $_SESSION['loginerror'] = 0;
         
         $newu = "";
         $newp = "";
@@ -52,8 +53,6 @@
                     $_SESSION['ins_id'] = $userID;
                     $_SESSION['user_type'] = "Instructor";
                     $_SESSION['modal'] = "None";
-                    
-                    
                     header("Location:../instructor/instructors/instructorpage.php?ins_id=$userID");
                     break;
                     
@@ -62,7 +61,8 @@
         }
         
         if($username != $newu && $password != $newp){
-            header("Location:./loginerror.html?login=error");
+            $_SESSION['loginerror'] = 1;
+            header("Location:../index.php");
         }
     };
 ?>

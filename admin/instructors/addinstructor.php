@@ -28,6 +28,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
 
 
     $un = $un.$random1.$random2.$random3;
+    $pw = $pw.$random2.$random3.$random1;
 
     $query2 = "SELECT * FROM instructors";
     $results2 = mysqli_query($dbc, $query2);
@@ -40,20 +41,18 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         }
     }
 
-    /*
     $to = $email; 
     $subject = 'ICS Faculty Loading System'; 
-    $message = "These are your login credentials for ICS Faculty Loading Sysyem. We advise you to change it. Username: $username Password: $password."; 
+    $message = "These are your login credentials for ICS Faculty Loading Sysyem. We advise you to change it. Username: $un Password: $pw."; 
     $headers = 'From: techsupport@theloadingsystem.com' . "\r\n" . 
                 'Reply-To: test@test.com' . "\r\n" . 
                 'X-Mailer: PHP/' . phpversion(); 
 
     mail($to, $subject, $message, $headers);  
-    */  
 
     if($check == 0){
         $result = mysqli_query($dbc, "INSERT INTO qualifications(qualinfo, insid) VALUES('', '$currentID')");
-        $results3 = mysqli_query($dbc, "INSERT INTO instructors(last_name,first_name,username,password,ins_status,major,email,full_name) VALUES('$ln', '$fn', '$un', '$pw$random2$random3$random1', '$status', '$major', '$email', '$ln $fn')");    
+        $results3 = mysqli_query($dbc, "INSERT INTO instructors(last_name,first_name,username,password,ins_status,major,email,full_name) VALUES('$ln', '$fn', '$un', '$pw', '$status', '$major', '$email', '$ln $fn')");    
         $_SESSION['modal'] = "successadd";
         header("Location:./instructorlist.php");
     }
