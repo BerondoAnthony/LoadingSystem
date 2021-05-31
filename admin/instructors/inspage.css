@@ -137,3 +137,9 @@ th {
 #spec {
 	margin-top: 5px;
 }
+
+#qual {
+	height: 8.5em;
+	border: 0;
+	outline: 0;
+}

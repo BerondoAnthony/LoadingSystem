@@ -291,9 +291,35 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         </div>
         <div class="p-2 m-1 card" id="pref-sched">
             <div id="psched-info">
-                <h4 class="">Schedule Preferences</h4>
-        
+                <h4 class="">Qualifications</h4>
             </div>
+            <form class="" action="./qualifications.php" method="POST">
+                <?php
+                    $query = "SELECT * FROM qualifications";
+                    $results = mysqli_query($dbc, $query);
+                    while($res = mysqli_fetch_array($results)){
+                        if($res['insid'] == $currentID){
+                            $info = $res['qualinfo'];
+                            $check = 1;
+                            break;
+                        }
+                    }
+                    if($check == 0 || $info == ""){
+                ?>
+                        <textarea class="w-100 mt-2 p-2" name="qualifications" id="qual" placeholder="Type in qualifications here."></textarea>
+                <?php
+                    }
+                    else{
+                ?>
+                    <textarea class="w-100 mt-2 p-2" name="qualifications" id="qual"><?php echo $res['qualinfo'] ?></textarea>
+                <?php
+                    }
+                    
+                ?>
+                <div class="ml-3 mr-3" id="">
+                    <input class="btn btn-sm btn-primary m-2" id="optbtn" type="submit" value="Save">
+                </div>
+            </form>
         </div>
 
     </div>
@@ -417,7 +443,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                 <div>
                     <form action="./sort.php?user_id=<?php echo "$currentID"?>" method="POST">
                         <select class="" id="filt" name="schoolyear" required>
-                            <?php
+                        <?php
                                 if($_SESSION['sortyear'] == ""){
                             ?>
                                 <option value="" disabled selected hidden>School Year</option>
@@ -439,15 +465,17 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                                 
                                 }
                             ?>
+                            <option class="" name="" value="">Clear</option>
                         </select>
                         <select class="" id="filt"name="sems" required>
                             <?php
-                                
+                            
                                 if($_SESSION['sortsem'] == ""){
                             ?>
                                 <option value="" disabled selected hidden>Semester</option>
                                 <option value="1">First</option>
                                 <option class="" name="" value="2">Second</option>
+                                <option class="" name="" value="">Clear</option>
                                 <!--
                                 <option class="" name="" value="3">Summer</option>
                                 -->
@@ -458,6 +486,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                             ?>
                                 <option value="1" selected>First</option>
                                 <option class="" name="" value="2">Second</option>
+                                <option class="" name="" value="">Clear</option>
                                 <!--
                                 <option class="" name="" value="3">Summer</option>
                                 -->
@@ -467,6 +496,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                             ?>
                                 <option value="2" selected >Second</option>
                                 <option class="" name="" value="1">First</option>
+                                <option class="" name="" value="">Clear</option>
                                 <!--
                                 <option class="" name="" value="3">Summer</option>
                                 -->
@@ -474,7 +504,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                                 }
                                 if($_SESSION['sortsem']==3){
                             ?>
-                                <option value="3" selected >Summer</option>
+                                
                                 <option class="" name="" value="1">First</option>
                                 <option class="" name="" value="2">Second</option>
                             <?php
@@ -503,8 +533,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                             $query = "SELECT * FROM scheds";
                             $results = mysqli_query($dbc, $query);
                             while($res = mysqli_fetch_array($results)){
-                                if($res['insid'] == $currentID){
+                                if($res['insid'] == $currentID ){
                                     if($res['school_year'] == $_SESSION['sortyear'] && $res['sched_sem'] == $_SESSION['sortsem']){
+                
                         ?>
                         <tr>
                                 <td>
@@ -567,9 +598,74 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         </tr>
                         <?php
                                     }
+
+                                    if($_SESSION['sortyear'] == "" && $_SESSION['sortsem'] == ""){
+
+                        ?>
+                        <tr>
+                                <td>
+                                    <p id="ins-form2"><?php echo $res['subject_title'] ?></p>
+                                </td>
+                                <td>
+                                    <p id="ins-form2"><?php echo $res['start_time'] ?></p>
+                                </td>
+                                <td>
+                                    <p id="ins-form2"><?php echo $res['end_time'] ?></p>
+                                </td>
+                                <td>
+                                    <?php
+                                        
+                                        $m="";
+                                        $t="";
+                                        $w="";
+                                        $th="";
+                                        $f="";
+                                        $s="";
+                                        $su="";
+
+                                        $stringdays = "";
+                                        if($res['mon']=='mon'){
+                                            $m="M";
+                                            $stringdays = $stringdays.$m;
+                                        }
+                                        if($res['tue']=='tue'){
+                                            $t="T";
+                                            $stringdays = $stringdays.$t;
+                                        }
+                                        if($res['wed']=='wed'){
+                                            $w="W";
+                                            $stringdays = $stringdays.$w;
+                                        }
+                                        if($res['thu']=='thu'){
+                                            $th="TH";
+                                            $stringdays = $stringdays.$th;
+                                        }
+                                        if($res['fri']=='fri'){
+                                            $f="F";
+                                            $stringdays = $stringdays.$f;
+                                        }
+                                        if($res['sat']=='sat'){
+                                            $s="S";
+                                            $stringdays = $stringdays.$s;
+                                        }
+                                        if($res['sun']=='sun'){
+                                            $su="SU";
+                                            $stringdays = $stringdays.$su;
+                                        }
+                                    ?>
+                                       
+                                    <p class="text-center" id="ins-form2"><?php echo $stringdays ?></p>
+                                </td>
+                                <td>
+                                    <p class="text-center" id="ins-form2"><?php echo $res['room_ass'] ?></p>
+                                </td>
+                                
+                        </tr>
+
+                        <?php
+                                    }
                                 }
                             }
-
                         ?>
                         
                     </table>

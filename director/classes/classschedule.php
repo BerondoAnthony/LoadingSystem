@@ -10,7 +10,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
 <html lang="en">
 
   <head>
-    <title>Curriculum List</title>
+    <title>Schedule List</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="../../assets/images/favicon.png">
@@ -246,7 +246,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $query = "SELECT * FROM schedules where class_id = $classid ORDER BY school_year DESC, semester ASC";
         $results = mysqli_query($dbc, $query);
         while($res = mysqli_fetch_array($results)){
-            if($res['stats'] == "Submit"){
+            if($res['stats'] == "Submitted"){
             $curricID = $res['curriculum']; 
       ?>
           <div class="card m-5 p-5 shadow" id="curriculum">
@@ -269,9 +269,17 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                 <p class="text-center pt-3 font-weight-light">Curriculum: <?php echo $res2['curriculum_name']?></p>
             <?php
                 }
-
+                if($res['status'] == "Approved"){
             ?>
-            <p class="text-center pt-3 font-weight-light">Status: <?php echo $res['status']?></p>
+                <p class="text-center pt-3 font-weight-light text-success">Status: <?php echo $res['status']?></p>
+            <?php
+                }
+                else{
+            ?>
+                <p class="text-center pt-3 font-weight-light text-danger">Status: <?php echo $res['status']?></p>
+            <?php
+                }
+            ?>
             <a href="../schedules/schedulelist.php?sched_id=<?php echo $res['sched_id']?>" class="btn stretched-link shadow-none"></a>
           </div>
 

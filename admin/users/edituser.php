@@ -47,6 +47,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
             $_SESSION['modal'] = "erroredit";
             header("Location:./userpage.php");
         }
+        
 
 
     }

@@ -7,6 +7,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
     if(isset($_POST['subjects'])){
 
         $check=0;
+        $_SESSION['errorins'] = 0;
+        $_SESSION['errorrms'] = 0;
+        $_SESSION['timeerror'] = 0;
+
+        $indexstart = 0;
+        $indexend = 0;
 
         $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -209,17 +215,22 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
             }
         }
 
+        if($indexstart >= $indexend && $indexstart !=0 && $indexend != 0){
+            $_SESSION['timeerror'] = 1;
+        }
+
         // CHECKING START
 
         $query2 = "SELECT * FROM room_scheds";
         $results2 = mysqli_query($dbc, $query2);
         while($res2 = mysqli_fetch_array($results2)){
-            if($start == $res2['start_time'] && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $schedsID != $res2['sched_ref'] && $assigni == $res2['insass']){
+            if($start == $res2['start_time'] && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $schedsID != $res2['sched_ref'] && $assigni == $res2['insass'] && $res2['insass'] != ""){
                 if($startoverwrite == 0){
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrmon = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -229,6 +240,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dtue == $res2['tue']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrtue = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -238,6 +250,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dwed == $res2['wed']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrwed = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -248,6 +261,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dthu == $res2['thu']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrthu = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -257,6 +271,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dfri == $res2['fri']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrfri = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }  
@@ -266,6 +281,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsat == $res2['sat']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrsat = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                             }
                         }
@@ -274,6 +290,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsun == $res2['sun']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrsun = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                             }
                         }
@@ -281,12 +298,13 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                 } 
             }
 
-            if($end == $res2['end_time'] && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $schedsID != $res2['sched_ref'] && $assigni == $res2['insass']){
+            if($end == $res2['end_time'] && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $schedsID != $res2['sched_ref'] && $assigni == $res2['insass'] && $res2['insass'] != ""){
                 if($endoverwrite == 0){
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrmon = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -296,6 +314,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dtue == $res2['tue']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrtue = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -305,6 +324,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dwed == $res2['wed']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrwed = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -315,6 +335,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dthu == $res2['thu']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrthu = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }
@@ -324,6 +345,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dfri == $res2['fri']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrfri = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                                 
                             }  
@@ -333,6 +355,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsat == $res2['sat']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrsat = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                             }
                         }
@@ -341,6 +364,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsun == $res2['sun']){
                             if($schedsID != $res2['sched_ref']){
                                     $dcrsun = 1;
+                                    $_SESSION['errorrms'] = 1;
                                     break;
                             }
                         }
@@ -354,12 +378,13 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $query2 = "SELECT * FROM ins_scheds";
         $results2 = mysqli_query($dbc, $query2);
         while($res2 = mysqli_fetch_array($results2)){
-            if($start == $res2['start_time'] && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $schedsID != $res2['sched_ref'] && $assignr == $res2['roomass']){
+            if($start == $res2['start_time'] && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $schedsID != $res2['sched_ref'] && $assignr == $res2['roomass'] && $res2['roomass'] != ""){
                 if($startoverwrite == 0){
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcimon = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -369,6 +394,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dtue == $res2['tue']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcitue = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -378,6 +404,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dwed == $res2['wed']){
                             if($schedsID != $res2['sched_ref']){
                                 $dciwed = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -388,6 +415,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dthu == $res2['thu']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcithu = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -397,6 +425,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dfri == $res2['fri']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcifri = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }  
@@ -406,6 +435,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsat == $res2['sat']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcisat = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                             }
                         }
@@ -414,18 +444,20 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsun == $res2['sun']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcisun = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                             }
                         }
                     }
                 }
             }
-            if($end == $res2['end_time'] && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $schedsID != $res2['sched_ref'] && $assignr == $res2['roomass']){
+            if($end == $res2['end_time'] && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $schedsID != $res2['sched_ref'] && $assignr == $res2['roomass']  && $res2['roomass'] != ""){
                 if($endoverwrite == 0){
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcimon = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -435,6 +467,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dtue == $res2['tue']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcitue = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -444,6 +477,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dwed == $res2['wed']){
                             if($schedsID != $res2['sched_ref']){
                                 $dciwed = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -454,6 +488,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dthu == $res2['thu']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcithu = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }
@@ -463,6 +498,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dfri == $res2['fri']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcifri = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                                 
                             }  
@@ -472,6 +508,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsat == $res2['sat']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcisat = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                             }
                         }
@@ -480,6 +517,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                         if($dsun == $res2['sun']){
                             if($schedsID != $res2['sched_ref']){
                                 $dcisun = 1;
+                                $_SESSION['errorins'] = 1;
                                 break;
                             }
                         }
@@ -521,7 +559,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $query2 = "SELECT * FROM ins_scheds";
         $results2 = mysqli_query($dbc, $query2);
         while($res2 = mysqli_fetch_array($results2)){
-            if($indexstart > $res2['indexstart'] && $indexstart < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $assignr == $res2['roomass']){
+            if($indexstart > $res2['indexstart'] && $indexstart < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $assignr == $res2['roomass'] && $res2['roomass'] != ""){
                 
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
@@ -587,7 +625,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                     }
                 
             }
-            if($indexend > $res2['indexstart'] && $indexend < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $assignr == $res2['roomass']){
+            if($indexend > $res2['indexstart'] && $indexend < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['ins_semester'] && $assignr == $res2['roomass'] && $res2['roomass'] != ""){
                 
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
@@ -659,7 +697,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $query2 = "SELECT * FROM room_scheds";
         $results2 = mysqli_query($dbc, $query2);
         while($res2 = mysqli_fetch_array($results2)){
-            if($indexstart > $res2['indexstart'] && $indexstart < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $assigni == $res2['insass']){
+            if($indexstart > $res2['indexstart'] && $indexstart < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $assigni == $res2['insass']  && $res2['insass'] != ""){
 
                     if($dmon != ""){
                         if($dmon == $res2['mon']){
@@ -725,7 +763,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                     }
                 
             }
-            if($indexend > $res2['indexstart'] && $indexend < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $assigni == $res2['insass']){
+            if($indexend > $res2['indexstart'] && $indexend < $res2['indexend']  && $sy == $res2['school_year'] && $sem == $res2['room_semester'] && $assigni == $res2['insass']  && $res2['insass'] != ""){
 
                 if($dmon != ""){
                     if($dmon == $res2['mon']){
@@ -799,11 +837,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         
         if($dothisI == "EDIT" && $dothisR == "EDIT"){
 
-            if($inscheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0){
+            if($inscheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0 && $_SESSION['timeerror'] == 0){
                 $query3 = "UPDATE ins_scheds SET start_time='$start', end_time='$end', insid='$ins_id', mon='$dmon', tue='$dtue', wed='$dwed', thu='$dthu', fri='$dfri', sat='$dsat', sun='$dsun', roomass='$assignr', indexstart='$indexstart', indexend='$indexend' where sched_ref='$schedsID'";
                 $results = mysqli_query($dbc,$query3);
             }
-            if($roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0){
+            if($roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0 && $_SESSION['timeerror'] == 0){
                 $query4 = "UPDATE room_scheds SET start_time='$start', end_time='$end', roomid='$room_id', mon='$dmon', tue='$dtue', wed='$dwed', thu='$dthu', fri='$dfri', sat='$dsat', sun='$dsun', insass='$assigni', indexstart='$indexstart', indexend='$indexend' where sched_ref='$schedsID'";
                 $results2 = mysqli_query($dbc,$query4);
             }
@@ -811,21 +849,20 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         }
         
         if($dothisI == "ADD" && $dothisR == "ADD"){
-            if($inscheck == 0 && $roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0){
+            if($inscheck == 0 && $roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0 && $_SESSION['timeerror'] == 0){
                 $results3 = mysqli_query($dbc, "INSERT INTO ins_scheds(start_time, end_time, class_assigned_id, school_year, ins_semester, insid, sched_ref, main_sched, mon, tue, wed, thu, fri, sat, sun, roomass, indexstart, indexend) VALUES('$start', '$end', '$classID', '$sy', '$sem', '$ins_id', '$schedsID', '$schedsget', '$dmon', '$dtue', '$dwed', '$dthu', '$dfri', '$dsat', '$dsun', '$assignr', '$indexstart', '$indexend')");
                 $results4 = mysqli_query($dbc, "INSERT INTO room_scheds(start_time, end_time, class_assigned_id, school_year, room_semester, roomid, sched_ref, main_sched, mon, tue, wed, thu, fri, sat, sun, insass, indexstart, indexend) VALUES('$start', '$end', '$classID', '$sy', '$sem', '$room_id', '$schedsID', '$schedsget', '$dmon', '$dtue', '$dwed', '$dthu', '$dfri', '$dsat', '$dsun', '$assigni', '$indexstart', '$indexend')");
             }
         }
 
-        if($inscheck == 0 && $roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0 && $indexchecki == 0 && $indexcheckr == 0){
+        if($inscheck == 0 && $roomcheck == 0 && $dcimon == 0 && $dcitue == 0 && $dciwed == 0 && $dcithu == 0 && $dcifri == 0 && $dcisat == 0 && $dcisun == 0 && $dcrmon == 0 && $dcrtue == 0 && $dcrwed == 0 && $dcrthu == 0 && $dcrfri == 0 && $dcrsat == 0 && $dcrsun == 0 && $indexchecki == 0 && $indexcheckr == 0 && $_SESSION['timeerror'] == 0){
 
             $query3 = "UPDATE scheds SET start_time='$start', end_time='$end', ins_ass='$ins', insid='$specificins', room_ass='$room', roomid='$specificroom', mon='$dmon', tue='$dtue', wed='$dwed', thu='$dthu', fri='$dfri', sat='$dsat', sun='$dsun' where sched_id='$schedsID'";
             $results = mysqli_query($dbc,$query3);
             $_SESSION['modal'] = "successedit";
             header("Location:./schedulelist.php?sched_id=$schedsget");
         }
-        if($roomcheck != 0 || $inscheck != 0 || $dcimon != 0 || $dcitue != 0 || $dciwed != 0 || $dcithu != 0 || $dcifri != 0 || $dcisat != 0 || $dcisun != 0 || $dcrmon != 0 || $dcrtue != 0 || $dcrwed != 0 || $dcrthu != 0 || $dcrfri != 0 || $dcrsat != 0 || $dcrsun != 0 || $indexchecki != 0 || $indexcheckr != 0){
-            $_SESSION['modal'] = "error";
+        if($roomcheck != 0 || $inscheck != 0 || $dcimon != 0 || $dcitue != 0 || $dciwed != 0 || $dcithu != 0 || $dcifri != 0 || $dcisat != 0 || $dcisun != 0 || $dcrmon != 0 || $dcrtue != 0 || $dcrwed != 0 || $dcrthu != 0 || $dcrfri != 0 || $dcrsat != 0 || $dcrsun != 0 || $indexchecki != 0 || $indexcheckr != 0 || $_SESSION['timeerror'] != 0){  
             header("Location:./schedulelist.php?sched_id=$schedsget");
         
         }
@@ -846,6 +883,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         echo $dcrsun."----";
         echo $indexchecki."----";
         echo $indexcheckr."----";
+        echo $_SESSION['errorrms']."----";
+        echo $_SESSION['errorins']."----";
+        echo $_SESSION['timeerror']."----";
 
     }
 }

@@ -26,7 +26,18 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $query = "SELECT * FROM ins_sub";
         $results = mysqli_query($dbc, $query);
         while($res = mysqli_fetch_array($results)){
-            if($res['subject_assigned'] == $subject && $res['ins_id'] == $currentID){
+            if($res['subject_assigned'] == $subject && $res['ins_id'] == $currentID && $curID != $res['ins_sub_id']){
+                $check=1;
+                $_SESSION['modal'] = "error";
+                header("Location:./instructorpage.php?ins_id=$currentID");
+                break;
+            }
+        }
+
+        $query = "SELECT * FROM ins_sub";
+        $results = mysqli_query($dbc, $query);
+        while($res = mysqli_fetch_array($results)){
+            if($res['ins_id'] == $currentID){
                 $check=1;
                 $_SESSION['modal'] = "error";
                 header("Location:./instructorpage.php?ins_id=$currentID");
@@ -35,7 +46,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         }
 
         if($check==0){
-            $query3 = "UPDATE ins_sub SET subject_assigned='$subject' where ins_sub_id='$curID'";
+            $query3 = "UPDATE ins_sub SET subject_assigned='$subject', full_name = where ins_sub_id='$curID'";
             $results = mysqli_query($dbc,$query3);
             $_SESSION['modal'] = "successedit";
             header("Location:./instructorpage.php?ins_id=$currentID");
