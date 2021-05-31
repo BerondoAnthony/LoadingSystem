@@ -4,6 +4,7 @@ session_start();
 if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['user_type'])){
     include_once("../../connection/connection.php");
 
+
     $fullurl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     
     $check = 0;
@@ -38,15 +39,24 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
             break;
         }
     }
-    $sub = "ICS Faculty Loading System";
-    $msg = "These are your credentials. Username: $un Password: $pw.";
 
-    
+    /*
+    $to = $email; 
+    $subject = 'ICS Faculty Loading System'; 
+    $message = "These are your login credentials for ICS Faculty Loading Sysyem. We advise you to change it. Username: $username Password: $password."; 
+    $headers = 'From: techsupport@theloadingsystem.com' . "\r\n" . 
+                'Reply-To: test@test.com' . "\r\n" . 
+                'X-Mailer: PHP/' . phpversion(); 
+
+    mail($to, $subject, $message, $headers);  
+    */  
+
     if($check == 0){
+        $result = mysqli_query($dbc, "INSERT INTO qualifications(qualinfo, insid) VALUES('', '$currentID')");
         $results3 = mysqli_query($dbc, "INSERT INTO instructors(last_name,first_name,username,password,ins_status,major,email,full_name) VALUES('$ln', '$fn', '$un', '$pw$random2$random3$random1', '$status', '$major', '$email', '$ln $fn')");    
-        mail($email,$sub,$msg);
         $_SESSION['modal'] = "successadd";
         header("Location:./instructorlist.php");
     }
+    
 }
 ?>

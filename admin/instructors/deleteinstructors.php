@@ -21,6 +21,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
     $results6 = mysqli_query($dbc,$query4);
     $results4 = mysqli_query($dbc, "DELETE FROM ins_sub where ins_id = $curID");
     $results3 = mysqli_query($dbc, "DELETE FROM instructors where ins_id = $curID");
+    $results7 = mysqli_query($dbc, "DELETE FROM qualifications where insid = $curID");
     $_SESSION['modal'] = "successdelete";
     header("Location:./instructorlist.php");
 }

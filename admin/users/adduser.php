@@ -12,7 +12,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $status = $_POST['status'];
         $username = 'user';
         $password = 'pass';
-        $email = '[email]';
+        $email = ['email'];
 
 
         $string1 = "qwertyuiop098ASDFGHJKL";
@@ -23,6 +23,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $random3 = substr(str_shuffle($string3),0,3);
 
         $username = $username.$random3.$random1.$random2;
+        $password = $password.$random1.$random2.$random3;
 
         $query2 = "SELECT * FROM users";
         $results2 = mysqli_query($dbc, $query2);
@@ -34,12 +35,20 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                 break;
             }
         }
-
-        $sub = "ICS Faculty Loading System";
-        $msg = "These are your credentials. Username: $un Password: $pw.";
         
+        /*
+        $to = $email; 
+        $subject = 'ICS Faculty Loading System'; 
+        $message = "These are your login credentials for ICS Faculty Loading Sysyem. We advise you to change it. Username: $username Password: $password."; 
+        $headers = 'From: techsupport@theloadingsystem.com' . "\r\n" . 
+                    'Reply-To: test@test.com' . "\r\n" . 
+                    'X-Mailer: PHP/' . phpversion(); 
+
+        mail($to, $subject, $message, $headers);  
+        */     
+             
         if($check==0){
-            $results3 = mysqli_query($dbc, "INSERT INTO users(username, password, user_type, user_status, email) VALUES('$username', '$password$random1$random2$random3', '$usertype', '$status', $email)");
+            $results3 = mysqli_query($dbc, "INSERT INTO users(username, password, user_type, user_status, email) VALUES('$username', '$password', '$usertype', '$status', $email)");
             $_SESSION['modal'] = "successadd";
             header("Location:./userpage.php?successadd");
         }

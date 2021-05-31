@@ -39,8 +39,10 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         if($check==0){
             $query3 = "UPDATE instructors SET last_name='$ln', first_name='$fn', email='$email', ins_status='$status', full_name='$ln $fn' where ins_id = '$currentID'";
             $query4 = "UPDATE scheds SET ins_ass='$ln $fn' where insid = '$currentID'";
+            $query5 = "UPDATE ins_sub SET full_name='$ln $fn' where ins_id = '$currentID'";
             $results = mysqli_query($dbc,$query3);
             $results = mysqli_query($dbc,$query4);
+            $results = mysqli_query($dbc,$query5);
             $_SESSION['modal'] = "successedit";
             header("Location:./instructorlist.php");
         }

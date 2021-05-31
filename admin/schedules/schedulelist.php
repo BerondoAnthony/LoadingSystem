@@ -142,6 +142,19 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         $_SESSION['modal'] = "None";
         }
     ?>
+    <?php
+        if(($_SESSION['modal'] == 'successsubmit')){
+    ?>
+        <script>
+            $(document).ready(function() {
+            $('#submitsuccess').modal('show');
+            });
+        </script>
+
+    <?php
+        $_SESSION['modal'] = "None";
+        }
+    ?>
 
     <!-- delete modal -->
     <div class="modal fade" id="currmodal" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
@@ -277,6 +290,25 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                 <div class="modal-footer">
                     <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
                     <a href="./draft.php?sched_id=<?php echo $currentID?>" class="btn btn-primary btn-sm" id="dobtn" >Yes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="submitsuccess" tabindex="-1" aria-labelledby="addClass#addClassroomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Schedule was submitted.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
                 </div>
             </div>
         </div>
@@ -691,7 +723,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                                             }
                                         ?>
                                         <?php
-                                            $query = "SELECT * FROM rooms ORDER BY room_building ASC";
+                                            $query = "SELECT * FROM rooms ORDER BY room_name, room_building DESC";
                                             $results = mysqli_query($dbc, $query);
                                             while($res = mysqli_fetch_array($results)){
                                                 if($res['room_full'] != $currroom){
@@ -723,6 +755,42 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
                     ?>
                 
                 </table>
+                <?php
+                    if($_SESSION['errorrms'] == 1 && $_SESSION['errorins'] == 1){
+                        $_SESSION['errorins'] = 0;
+                        $_SESSION['errorrms'] = 0;
+                        $_SESSION['timeerror'] = 0;
+                ?>
+                    <p class="text-center text-danger font-weight-bold">There was a conflict with the room and instructor.</p>
+                <?php
+                    }
+                    if($_SESSION['errorins'] == 1){
+                        $_SESSION['errorins'] = 0;
+                        $_SESSION['errorrms'] = 0;
+                        $_SESSION['timeerror'] = 0;
+                ?>
+                    <p class="text-center text-danger font-weight-bold">There was a conflict with the room. Try a different time and day or change the Room.</p>
+                <?php
+
+                    }
+                    if($_SESSION['errorrms'] == 1){
+                        $_SESSION['errorins'] = 0;
+                        $_SESSION['errorrms'] = 0;
+                        $_SESSION['timeerror'] = 0;
+                ?>
+                    <p class="text-center text-danger font-weight-bold">There was a conflict with the instructor. Try a different time and day or change the Instructor.</p>
+                <?php
+                    }
+                    if($_SESSION['timeerror'] == 1){
+                        $_SESSION['errorins'] = 0;
+                        $_SESSION['errorrms'] = 0;
+                        $_SESSION['timeerror'] = 0;
+                ?>
+                    <p class="text-center text-danger font-weight-bold">The schedule can't end before it starts. Try another time slot.</p>
+                <?php
+                    }
+                ?>
+                        
             </div>
 
         </div>

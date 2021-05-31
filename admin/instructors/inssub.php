@@ -36,7 +36,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSI
         echo $check;
 
         if($check==0){
-            $result = mysqli_query($dbc, "INSERT INTO ins_sub(subject_assigned, ins_id) VALUES('$subject', '$currentID')"); 
+            $result = mysqli_query($dbc, "INSERT INTO ins_sub(subject_assigned, ins_id, full_name) VALUES('$subject', '$currentID', '$fn')"); 
             $_SESSION['modal'] = "successadd";
             header("Location:./instructorpage.php?ins_id=$currentID");
         }
